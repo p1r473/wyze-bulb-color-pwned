@@ -234,7 +234,14 @@ static void start_ap(void){
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_ap();
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+#ifdef LIGHTJACK_LOADER_POC
+    /* Lightjack, 2026-10-21: preserve saved bulb settings before backup. */
+    cfg.nvs_enable = 0;
+#endif
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+#ifdef LIGHTJACK_LOADER_POC
+    ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
+#endif
     esp_read_mac(s_mac, ESP_MAC_WIFI_SOFTAP);
     char ap_ssid[32];
     snprintf(ap_ssid, sizeof(ap_ssid), AP_SSID_PREFIX "_%02X%02X%02X", s_mac[3], s_mac[4], s_mac[5]);
@@ -252,11 +259,13 @@ static void start_ap(void){
 }
 
 void app_main(void){
+#ifndef LIGHTJACK_LOADER_POC
     esp_err_t r = nvs_flash_init();
     if (r == ESP_ERR_NVS_NO_FREE_PAGES || r == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         nvs_flash_erase();
         nvs_flash_init();
     }
+#endif
     start_ap();
     start_httpd();
     bulb_write_init();

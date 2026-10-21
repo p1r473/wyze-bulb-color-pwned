@@ -1,0 +1,11 @@
+# Lightjack laboratory profile, 2026-10-21. SPDX-License-Identifier: MIT.
+cmake_minimum_required(VERSION 3.16)
+set(IDF_TARGET esp32s3)
+set(EXTRA_COMPONENT_DIRS "${CMAKE_CURRENT_LIST_DIR}/../wyze-hijack-ap/main")
+set(PROJECT_VER "0.1.0-lightjack-installer")
+if(NOT DEFINED LIGHTJACK_LOADER_PAYLOAD)
+    message(FATAL_ERROR "Build the Lightjack loader first and supply LIGHTJACK_LOADER_PAYLOAD")
+endif()
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+idf_build_set_property(MINIMAL_BUILD ON)
+project(lightjack_installer)

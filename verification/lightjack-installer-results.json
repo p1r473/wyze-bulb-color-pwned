@@ -1,0 +1,191 @@
+{
+  "idf_commit": "fff9895c82d744c7237be8847347bdd1b07c6643",
+  "hardware_tested": false,
+  "embedded_loader_matches": true,
+  "artifacts": {
+    "loader/wyze_loader.bin": {
+      "size_bytes": 818240,
+      "sha256": "aa9492a251211b8a510065c02eecbfef2ed55beca1415d4fdd38a3ae738efbec",
+      "chip": "esp32c3",
+      "checksum_and_hash_valid": true,
+      "flash_mode": "DIO",
+      "flash_frequency_mhz": 40,
+      "flash_size_bytes": 4194304,
+      "min_revision_full": 3,
+      "max_revision_full": 199,
+      "project_name": "wyze_loader",
+      "version": "0.1.0-lightjack-loader",
+      "idf_version": "v6.1.0"
+    },
+    "installer/bootloader/bootloader.bin": {
+      "size_bytes": 21168,
+      "sha256": "d1944e2e180bca200543cba94b9e347f3da7990a56e4c0e8e88f5d6040d69a30",
+      "chip": "esp32s3",
+      "checksum_and_hash_valid": true,
+      "flash_mode": "DIO",
+      "flash_frequency_mhz": 40,
+      "flash_size_bytes": 4194304,
+      "min_revision_full": 0,
+      "max_revision_full": 99
+    },
+    "installer/partition_table/partition-table.bin": {
+      "size_bytes": 3072,
+      "sha256": "73c0b5c3e5fcba3a151cc70c453c93dd5f4798899e7f2f8cca76da1f32ffc501"
+    },
+    "installer/lightjack_installer.bin": {
+      "size_bytes": 1529552,
+      "sha256": "f4f6b48b88f6d04d41909ee02723eadd9bdf44df5cb11cd61545bb397916b2db",
+      "chip": "esp32s3",
+      "checksum_and_hash_valid": true,
+      "flash_mode": "DIO",
+      "flash_frequency_mhz": 40,
+      "flash_size_bytes": 4194304,
+      "min_revision_full": 0,
+      "max_revision_full": 99,
+      "project_name": "lightjack_installer",
+      "version": "0.1.0-lightjack-installer",
+      "idf_version": "v6.1.0"
+    }
+  },
+  "date": "2026-10-21",
+  "esptool": "5.6.0",
+  "sdk": "ESP-IDF v6.1",
+  "toolchain": "esp-15.2.0_20251204",
+  "layouts": {
+    "loader": [
+      {
+        "name": "nvs",
+        "offset": 36864,
+        "size": 16384,
+        "type": 1,
+        "subtype": 2
+      },
+      {
+        "name": "otadata",
+        "offset": 53248,
+        "size": 8192,
+        "type": 1,
+        "subtype": 0
+      },
+      {
+        "name": "phy_init",
+        "offset": 61440,
+        "size": 4096,
+        "type": 1,
+        "subtype": 1
+      },
+      {
+        "name": "ota_0",
+        "offset": 65536,
+        "size": 1966080,
+        "type": 0,
+        "subtype": 16
+      },
+      {
+        "name": "ota_1",
+        "offset": 2031616,
+        "size": 1966080,
+        "type": 0,
+        "subtype": 17
+      },
+      {
+        "name": "mac",
+        "offset": 3997696,
+        "size": 16384,
+        "type": 1,
+        "subtype": 2
+      },
+      {
+        "name": "iot",
+        "offset": 4014080,
+        "size": 16384,
+        "type": 1,
+        "subtype": 2
+      },
+      {
+        "name": "user",
+        "offset": 4030464,
+        "size": 32768,
+        "type": 1,
+        "subtype": 2
+      },
+      {
+        "name": "factory_nvs",
+        "offset": 4063232,
+        "size": 24576,
+        "type": 1,
+        "subtype": 2
+      },
+      {
+        "name": "reserved",
+        "offset": 4087808,
+        "size": 73728,
+        "type": 1,
+        "subtype": 254
+      }
+    ],
+    "installer": [
+      {
+        "name": "nvs",
+        "offset": 36864,
+        "size": 24576,
+        "type": 1,
+        "subtype": 2
+      },
+      {
+        "name": "phy_init",
+        "offset": 61440,
+        "size": 4096,
+        "type": 1,
+        "subtype": 1
+      },
+      {
+        "name": "factory",
+        "offset": 65536,
+        "size": 3145728,
+        "type": 0,
+        "subtype": 0
+      }
+    ]
+  },
+  "embedded_loader_file_offset": 56581,
+  "loader_object_has_no_nvs_init_or_erase_reference": true,
+  "loader_startup_disassembly_inspected": true,
+  "loader_phy_nvs_storage_disabled": true,
+  "installer_psram_disabled": true,
+  "s3_flash_files": {
+    "0x0": "bootloader/bootloader.bin",
+    "0x8000": "partition_table/partition-table.bin",
+    "0x10000": "lightjack_installer.bin"
+  },
+  "local_review": {
+    "host": "FlyingDutchman",
+    "model": "qwen38-fast-27b-opt:latest",
+    "finding": "Reviewer generic-calibration concern was contradicted by pinned esp_phy/Kconfig and phy_init.c: disabling persistence selects full calibration at each boot. Physical radio and flash-preservation tests remain required.",
+    "build_script_review": "Focused source review found no concrete destructive action, payload mixup or false-completion defect; independently confirmed build-only commands and matched payload artifacts."
+  },
+  "limitations": [
+    "No board or bulb was flashed; hardware compatibility and radio behavior are unverified.",
+    "Loader HTTP remains unauthenticated on its open AP, for isolated laboratory use only.",
+    "Wireless installation still changes an application slot and OTA selection.",
+    "Removing this startup erase fallback does not establish unchanged flash on hardware.",
+    "Upstream installer triggers installation automatically when a compatible bulb joins.",
+    "Build timestamps are embedded; future builds can have different binary hashes."
+  ],
+  "source_sha256_lf": {
+    "scripts/build_lightjack_installer.py": "f12f5bda2cc27198fa0956ae6bf88207b3b24cb2074fc635a4df9eb0db21b0fa",
+    "src/lightjack-loader/CMakeLists.txt": "5ba570ec187e84d57c678574c6597895c2a2a167f8425f195197806074640e10",
+    "src/lightjack-loader/sdkconfig.defaults": "c7eeaf1ca7c111d1d3ff13b6eb4541c1b5152c5e6c73a401b5ea4fd2aa44b8cf",
+    "src/lightjack-installer/CMakeLists.txt": "0a1e448dafecc1961fe6263b93b76fa401cbbd4e0a6a76c17ee448a834bbc345",
+    "src/lightjack-installer/sdkconfig.defaults": "25d976e9c3f590cacc7c75c4ec99c0ae1a89809ce2e81ec6a64c9aaebe81fdcc",
+    "src/wyze-loader/main/loader_main.c": "87c8eeef59e2479e9d117c909f7dc9496ac04bd236c334a1c1e485d625845e93",
+    "src/wyze-loader/main/CMakeLists.txt": "de3b25c1dbbe7bfe693d7d111ad46e159080c7cd78e8c43ff128309cf5294622",
+    "src/wyze-loader/main/bulb_write.c": "7ec0d8d5c2ec65e6e7537d842f12f9dee8f52d49578857a060b087b0961c99a3",
+    "src/wyze-loader/main/bulb_write.h": "2f58ecbcfb4e02b2058fd54cf551c852a4bf73ea3180d7f53a4ae35a21dc75c6",
+    "src/wyze-loader/main/index.html": "dc5ebaa5fe98bc44623ccc9d6777ac40efd40c91b70ac9b3cf0aa74dfacdc886",
+    "src/wyze-loader/partitions_wyze.csv": "1cfc9659fc0aba7d3ebc59c04c20a99d15b8c7bb891bc51991fa25ab059182e2",
+    "src/wyze-hijack-ap/main/ap_main.c": "03a02ce60b93cf6d139bec33c86b8cd4016069730c48df3b32da10ad3f71dcb9",
+    "src/wyze-hijack-ap/main/CMakeLists.txt": "8e9a12484cec7224a3b8defbb991f527ee7c77298d259e527c0e01de4f8c83b7",
+    "src/wyze-hijack-ap/partitions.csv": "0eae1a381567cd2562af8335c6ecdf61bdf1ec12b187e974fe4c87a5c2b43ae6"
+  }
+}
