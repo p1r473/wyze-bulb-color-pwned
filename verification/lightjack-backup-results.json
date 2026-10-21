@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-21",
+  "passed": true,
+  "test_methods": 7,
+  "python": "3.12.14",
+  "os": "Windows",
+  "scope": "Read-only backup client against synthetic loopback HTTP loader fixtures",
+  "hardware_tested": false,
+  "restoration_tested": false,
+  "pristine_factory_snapshot": false,
+  "upstream_base_commit": "41ea9f2de79927e192416b868762fd985ff2cc26",
+  "verified": [
+    "Two matching complete 4 MiB reads and saved-file SHA256",
+    "GET-only requests with HTTP chunked transfer",
+    "Truncation, extra bytes, changed data and changed identity rejection",
+    "Redirect refusal, absolute request and global deadlines with trickling headers",
+    "Partition-map validation and refusal to overwrite existing output",
+    "Private backup destination must be outside the source repository"
+  ],
+  "review": {
+    "host": "FlyingDutchman",
+    "model": "qwen38-fast-27b-opt:latest",
+    "finding": "No concrete false-success or destructive-write defect found in focused source review.",
+    "independent_checks": "GET call site, output creation, exact lengths, two-pass hash equality and failure manifests inspected."
+  },
+  "source_sha256_lf": {
+    "scripts/backup_loader.py": "a17844327469912ebc5b8312800536e9cf73aa72c00b7d99881162621e4d4265",
+    "scripts/test_backup_loader.py": "802cabc76ea450082e7011765ec3de7623a288828c95588dc82cf54e6d76a0ae",
+    "docs/LIGHTJACK-BACKUP.md": "7b1e3f3ba1112e23c775fe434501915cb7414d4e8548a1273137ea3669d7f3d5",
+    "src/wyze-loader/partitions_wyze.csv": "1cfc9659fc0aba7d3ebc59c04c20a99d15b8c7bb891bc51991fa25ab059182e2",
+    "LICENSE": "bcbdd9d1b74712f3ed7cfd21ad56cc860355f87f4f980af62856a0be8bb47719"
+  }
+}
